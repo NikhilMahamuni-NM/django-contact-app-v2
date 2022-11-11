@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block bodyblock %}
+    <h1>Hello From Contact Details!!</h1> 
+    <a href="{% url 'cards:editCard' card.id %}" >Edit</a>
+    <a href="{% url 'cards:deleteCard' card.id %}" >Delete Card</a>
+    {{card.firstName}}
+
+    <h3>Contacts</h3>
+    {% for contact in contacts %}
+        <p>{{contact.type}} - {{ contact.number}}</p>
+    {% endfor %}
+    
+    {% if workInfo %}
+    <h3>Work Info</h3>
+    {{workInfo.workCountry}}
+    {% endif %}
+{% endblock bodyblock %}

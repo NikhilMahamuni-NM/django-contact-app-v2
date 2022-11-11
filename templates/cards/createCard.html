@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block bodyblock %}
+        <h1>Hello From Create Card!!</h1> 
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{cardForm.as_p}}
+            {% if formset %}
+            {{ formset.management_form}}
+            <div id="contact-formset-list" >
+                {% for form in formset %}
+                    <div class="contact-formset">
+                        {{ form }}
+                    </div> 
+                {% endfor %}
+            </div>
+            <div id="empty-form" class="hidden" >{{ formset.empty_form }}</div>
+            <button id="add-contact" type="button">Add Contact</button>
+            {% endif %}
+            
+            <input type="submit" name="Submit">
+        </form>
+
+        <script type="text/javascript">
+            const btn = document.getElementById("add-contact")
+            const totalNewForms = document.getElementById("id_form-TOTAL_FORMS")
+            
+            btn.addEventListener('click', (e) => {
+                if (e) {
+                    e.preventDefault()
+                }
+                const currentForms = document.getElementsByClassName("contact-formset")
+                const currentFormCount = currentForms.length
+                const contactFormTarget = document.getElementById('contact-formset-list')
+                const emptyform = document.getElementById('empty-form').cloneNode(true)
+                // const clone = emptyform.cloneNode(true)
+                emptyform.setAttribute('class', 'contact-formset')
+                emptyform.setAttribute('id', `form-${currentFormCount}`)
+                const regex = RegExp('__prefix__', 'g')
+                emptyform.innerHTML = emptyform.innerHTML.replace(regex, currentFormCount)
+                totalNewForms.setAttribute('value', currentFormCount + 1)
+                contactFormTarget.append(emptyform)
+            })
+
+        </script>
+
+{% endblock bodyblock %}

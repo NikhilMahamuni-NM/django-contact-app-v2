@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block bodyblock %}
+    <h1>My Contacts</h1> 
+    <div class="row">
+    
+        {% for card in cards %}
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="
+                    card mb-3 
+                    {% if card.gender == 'Male' %} 
+                        border-success 
+                    {% else %}
+                        border-info    
+                    {% endif %}" style="max-width: 540px;">
+                    <a href="{% url 'cards:contactDetail' card.id %}"> 
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ card.image.url }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">{{card.firstName}} {{card.lastName}}</h5>
+                                    <p class="card-text">{{ card.gender }}</p>
+                                    <p class="card-text">Email - {{ card.emailAddress }}</p>
+                                    <p class="card-text"><small class="text-muted">Added - {{ card.date_added }}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    
+                </div>
+            </div>
+            
+        {% endfor %}
+    </div>
+{% endblock bodyblock %}
